@@ -7,50 +7,42 @@
     <title>NaapJhok</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
     <!-- Navigation Bar -->
-<header>
-    <nav class="navbar">
-        <div class="logo">
-            <img src="/assets/NaapJhok.jpeg" alt="NaapJhok Logo">
-        </div>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li class="dropdown">
-                <a href="#services">Services</a>
-                <ul class="dropdown-menu">
-                    <li><a href="/services/mens">Men's</a></li>
-                    <li><a href="/services/womens">Women's</a></li>
-                </ul>
-            </li>
-            <li><a href="/become-tailor">Become Our Tailor</a></li>
-        </ul>
-        
-        <div class="actions">
-            <% if (customerName) { %>
-                <a href="/my-orders" class="btn action1">My Orders</a>
-                <a href="/logout" class="btn action2">Logout</a>
-            <% } else { %>
-                <a href="/login/customer" class="btn action1">Login</a>
-                <a href="/register" class="btn action2">Signup</a>
-            <% } %>
-        </div>
-        
-        
-        
-        
-        
-    </nav>
-</header>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="/assets/NaapJhok.jpeg" alt="NaapJhok Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a href="#services">Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/services/mens">Men's</a></li>
+                        <li><a href="/services/womens">Women's</a></li>
+                    </ul>
+                </li>
+                <li><a href="/become-tailor">Become Our Tailor</a></li>
+            </ul>
 
+            <div class="actions">
+                <% if (customerName) { %>
+                    <a href="/my-orders" class="btn action1">My Orders</a>
+                    <a href="/logout" class="btn action2">Logout</a>
+                <% } else { %>
+                    <a href="/login/customer" class="btn action1">Login</a>
+                    <a href="/register" class="btn action2">Signup</a>
+                <% } %>
+            </div>
+        </nav>
+    </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <h1>Welcome to NaapJhok</h1>
         <p>Stitching Happiness at Your Doorstep.</p>
-        <div class="cta-buttons">
-            <a href="/login/customer" class="btn primary-btn">Get Started</a>
-        </div>
     </section>
 
     <!-- Services Section -->
@@ -58,8 +50,7 @@
         <div class="container">
             <div class="video">
                 <video controls autoplay muted loop>
-                    <source src="/assets/mixkit-hand-selecting-through-clothes-23327-hd-ready.mp4"
-                        type="video/mp4">
+                    <source src="/assets/mixkit-hand-selecting-through-clothes-23327-hd-ready.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
@@ -125,39 +116,37 @@
 
     <!-- Contact Section -->
     <section class="contact-section">
-      <h2>Contact Us</h2>
-      <p class="contact-intro">Our customer service team is available to assist you with any inquiries.</p>
+        <h2>Contact Us</h2>
+        <p class="contact-intro">Our customer service team is available to assist you with any inquiries.</p>
 
-      <div class="contact-container">
-          <div class="contact-item">
-              <span class="icon">&#9993;</span> <!-- Email Icon -->
-              <h3>Email</h3>
-              <p>For tailor inquiries or partnership opportunities, contact us at:</p>
-              <a href="mailto:info@naapjhok.com">info@naapjhok.com</a>
-          </div>
+        <div class="contact-container">
+            <div class="contact-item">
+                <span class="icon">&#9993;</span> <!-- Email Icon -->
+                <h3>Email</h3>
+                <p>For tailor inquiries or partnership opportunities, contact us at:</p>
+                <a href="mailto:info@naapjhok.com">info@naapjhok.com</a>
+            </div>
 
-          <div class="contact-item">
-              <span class="icon">&#9742;</span> <!-- Phone Icon -->
-              <h3>Phone</h3>
-              <p>Follow us on social media for updates and promotions:</p>
-              <p>+123-456-7890</p>
-          </div>
+            <div class="contact-item">
+                <span class="icon">&#9742;</span> <!-- Phone Icon -->
+                <h3>Phone</h3>
+                <p>Follow us on social media for updates and promotions:</p>
+                <p>+123-456-7890</p>
+            </div>
 
-          <div class="contact-item">
-              <span class="icon">&#127968;</span> <!-- Office Icon -->
-              <h3>Office</h3>
-              <p>We look forward to hearing from you at:</p>
-              <p>123 Main Street, City, Country</p>
-          </div>
-      </div>
-  </section>
+            <div class="contact-item">
+                <span class="icon">&#127968;</span> <!-- Office Icon -->
+                <h3>Office</h3>
+                <p>We look forward to hearing from you at:</p>
+                <p>123 Main Street, City, Country</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const customerId = "<%= typeof customerId !== 'undefined' ? customerId : '' %>";
+        console.log("Customer ID:", customerId); // This will be empty if not defined
+    </script>
 
 </body>
-<!-- In index.ejs -->
-<script>
-    const customerId = "<%= typeof customerId !== 'undefined' ? customerId : '' %>";
-    console.log("Customer ID:", customerId); // This will be empty if not defined
-</script>
-
-
 </html>
