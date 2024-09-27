@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>Welcome, <%= customer.name %>!</h1>
+            <p>Your unique customer ID: <%= customer._id %></p>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </header>
+
+        <section class="orders-section">
+            <h2>Your Orders</h2>
+
+            <% if (customer.orders && customer.orders.length > 0) { %>
+                <ul class="order-list">
+                    <% customer.orders.forEach(order => { %>
+                        <li class="order-item">
+                            <span>Order ID: <%= order._id %></span>
+                            <span>Status: <%= order.status %></span>
+                            <span>Items: <%= order.items.join(', ') %></span>
+                            <span>Total: $<%= order.total %></span>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>You have no orders yet.</p>
+            <% } %>
+        </section>
+    </div>
+</body>
+</html>
