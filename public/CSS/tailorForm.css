@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #ECE7D5; /* Light greyish background matching previous page */
     margin: 0;
     padding: 0;
     display: flex;
@@ -10,7 +10,7 @@ body {
   }
   
   .form-container {
-    background-color: white;
+    background-color: #F2E2C9; /* Background for the form */
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -22,12 +22,14 @@ body {
   h1 {
     text-align: center;
     margin-bottom: 20px;
+    color: #98572A; /* Darker color for headings */
   }
   
   label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
+    color: #703E29; /* Dark grey for labels */
   }
   
   input[type="text"],
@@ -37,16 +39,17 @@ body {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid #DCA977; /* Light border color matching previous page */
     border-radius: 4px;
     font-size: 16px;
+    background-color: #ECE7D5; /* Very light grey input background */
   }
   
   button.submit-btn {
     width: 100%;
     padding: 12px;
-    background-color: #4CAF50;
-    color: white;
+    background-color: #98572A; /* Consistent with branding */
+    color: #F2E2C9;
     border: none;
     border-radius: 4px;
     font-size: 18px;
@@ -55,6 +58,6 @@ body {
   }
   
   button.submit-btn:hover {
-    background-color: #45a049;
+    background-color: #703E29; /* Slightly darker color on hover */
   }
   

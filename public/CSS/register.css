@@ -20,34 +20,48 @@ form {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Fixed width for form */
+    width: 100%;
+    max-width: 400px; /* Maximum width for form */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align the content */
 }
 
-div {
+.form-group {
+    width: 100%;
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align input fields */
 }
 
 label {
-    display: block;
+    width: 100%;
     margin-bottom: 5px;
     color: #703E29; /* Label color */
+    font-weight: bold;
+    text-align: center; /* Center the label text */
 }
 
 input {
-    width: 100%; /* Full-width inputs */
+    width: 90%; /* Smaller width to provide space on the sides */
     padding: 10px;
     border: 1px solid #DCA977; /* Input border color */
     border-radius: 5px;
+    font-size: 16px;
+    text-align: center; /* Center the input text */
 }
 
 button {
     background-color: #98572A; /* Button background */
-    color: white; /* Button text color */
+    color: #F2E2C9; /* Button text color */
     border: none;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%; /* Full-width button */
+    width: 90%; /* Full-width button with smaller width for alignment */
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {

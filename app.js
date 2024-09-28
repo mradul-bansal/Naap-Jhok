@@ -97,7 +97,7 @@ app.post('/login/customer', async (req, res) => {
           const orders = await Order.find({ customerId: customer._id });
 
           // Render the index page with customer info and their orders
-          return res.render('listings/index', { customerName: customer.name, orders });
+          return res.render('listings/loginindex', { customerName: customer.name, orders });
       } else {
           res.render('auth/customerLogin', { error: 'Invalid credentials. Please try again.' });
       }
@@ -231,4 +231,27 @@ app.get("/place-order", (req, res) => {
     return res.redirect("/login/customer"); // Ensure the user is logged in
   }
   res.render("listings/orderform.ejs"); // Render the order placement form
+});
+
+
+app.get('/my-orders', (req, res) => {
+  const customerId = req.session.customerId; // Assuming session stores customer ID
+  
+  if (!customerId) {
+      return res.redirect('/login/customer');
+  }
+  
+  // Fetch orders from database based on customerId
+  const orders = getOrdersByCustomerId(customerId); // Replace with actual DB query
+  res.render('myOrders', { orders });
+});
+
+
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+      if (err) {
+          console.log('Error destroying session:', err);
+      }
+      res.redirect('/login/customer');
+  });
 });
