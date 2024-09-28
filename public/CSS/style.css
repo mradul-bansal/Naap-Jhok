@@ -10,45 +10,42 @@
 .logo {
     display: flex;
     align-items: center;
-    height: 35px; /* Adjust as needed */
-    margin-left: 0; /* Ensure the logo starts at the leftmost point */
+    height: 80px; /* Adjust as needed */
+    /* Remove the padding-left to shift the logo left */
 }
 
 .navbar {
     display: flex;
+    height: fit-content;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 20px; /* Adjust padding to keep the navbar height consistent */
-    background-color: #F2E2C9;
+    /* padding: 8px 20px; Adjust padding to keep the navbar height consistent */
+    background-color: #FEF8E6;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-    padding-left: 0px; /* Ensure no extra padding on the left */
+    /* Reduce left padding to bring the logo closer to the left edge */
+    padding-left: 0px; 
 }
 
 .logo img {
-    display: flex;
-    justify-content: center;
-    max-height: 190%;
+    max-height: 100%;
     max-width: auto;
-    object-fit: contain ;
-    align-items: left;
-    margin-left: 0; /* Ensure no margin inside the logo image */
-    padding-left: 10px; 
-    padding-top: 5px;/* Ensure no padding inside the logo image */
-    padding-bottom: 5px;
+    object-fit: contain;
+    padding-left: 0px; 
 }
-
 
 
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 40px;
+
 }
 
 .nav-links li a {
     text-decoration: none;
-    color: #98572A; 
+    color: #D1690A; 
     font-weight: 600;
+    font-size: 25px;
 }
 
 .actions {
@@ -60,21 +57,23 @@
     padding: 10px 20px;
     text-decoration: none;
     font-weight: bold;
-    border: 2px solid #98572A; 
-    color: #98572A; 
+    border: 2px solid #D1690A; 
+    color: #D1690A; 
     border-radius: 4px;
     transition: background-color 0.3s ease;
 }
 
 .btn.action1 {
-    background-color: #98572A;
-    color: #F2E2C9; 
+    background-color: #D1690A;
+    color: #FEF8E6; 
 }
 
 .btn:hover {
     background-color: #703E29; 
-    color: #F2E2C9; 
+    color: #FEF8E6; 
 }
+
+/* Hero Section Styling */
 
 .hero {
     position: relative;
@@ -95,7 +94,8 @@
     height: 100%;
     object-fit: cover;
     z-index: -1;
-    filter: brightness(50%); /* Darken video for better text readability */
+    filter: brightness(40%); /* Darken video for better text readability */
+
 }
 
 .hero-content {
@@ -114,6 +114,7 @@ h1 {
 .hero p {
     font-size: 1.5rem;
 }
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -173,9 +174,9 @@ h1 {
 
 .service-item h2 {
     font-size: 1.8rem;
-    color: #98572A;
+    color: #D1690A;
     margin-bottom: 10px;
-    border-left: 4px solid #98572A;
+    border-left: 4px solid #D1690A;
     padding-left: 10px;
 }
 
@@ -195,7 +196,7 @@ h1 {
 }
 
 .promo-card {
-    background-color: #F2E2C9; 
+    background-color: #FEF8E6; 
     width: 70%;
     padding: 50px;
     position: relative;
@@ -227,7 +228,7 @@ h1 {
 
 .promo-content h1 {
     font-size: 2.5rem;
-    color: #98572A; 
+    color: #D1690A; 
     margin-bottom: 10px;
 }
 
@@ -239,8 +240,8 @@ h1 {
 
 .cta-btn {
     display: inline-block;
-    background-color: #98572A;
-    color: #F2E2C9; 
+    background-color: #D1690A;
+    color: #FEF8E6; 
     padding: 10px 20px;
     text-decoration: none;
     font-weight: bold;
@@ -271,7 +272,7 @@ h1 {
 .testimonials h2 {
     font-size: 2.5em;
     margin-bottom: 10px;
-    color: #98572A; 
+    color: #D1690A; 
 }
 
 .testimonials p {
@@ -288,7 +289,7 @@ h1 {
 }
 
 .testimonial-card {
-    background-color: #F2E2C9;
+    background-color: #FEF8E6;
     border-radius: 12px;
     padding: 25px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -319,7 +320,7 @@ h1 {
 .testimonial-card h3 {
     font-size: 1.5em;
     margin-bottom: 5px;
-    color: #98572A; 
+    color: #D1690A; 
 }
 
 .testimonial-card .title {
@@ -330,7 +331,7 @@ h1 {
 
 .testimonial-card .description {
     font-size: 1em;
-    color: #98572A;
+    color: #D1690A;
     line-height: 1.4;
 }
 
@@ -384,12 +385,12 @@ h1 {
 .contact-section {
     text-align: center;
     padding: 50px 20px;
-    background-color: #F2E2C9; 
+    background-color: #FEF8E6; 
 }
 
 .contact-section h2 {
     font-size: 2.5rem;
-    color: #98572A; 
+    color: #D1690A; 
     margin-bottom: 20px;
 }
 
@@ -427,7 +428,7 @@ h1 {
 
 .contact-item a {
     font-size: 1rem;
-    color: #98572A;
+    color: #D1690A;
     text-decoration: none;
     font-weight: bold;
 }
@@ -435,7 +436,7 @@ h1 {
 .icon {
     font-size: 2.5rem;
     margin-bottom: 15px;
-    color: #98572A;
+    color: #D1690A;
 
 @media (max-width: 768px) {
     .contact-container {
@@ -460,7 +461,7 @@ h1 {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #F2E2C9;
+    background-color: #FEF8E6;
     list-style: none;
     padding: 10px 0;
     border-radius: 4px;
@@ -474,7 +475,7 @@ h1 {
 
 .dropdown-menu li a {
     text-decoration: none;
-    color: #98572A;
+    color: #D1690A;
     font-weight: 600;
 }
 
@@ -484,4 +485,4 @@ h1 {
 
 .dropdown:hover .dropdown-menu {
     display: block;
-}
+}  
