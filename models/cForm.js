@@ -16,18 +16,23 @@ const cFormSchema = new mongoose.Schema({
   pincode: {
     type: Number,
     required: true,
-    maxLength : 6
+    maxLength: 6,
   },
-    address: {
-        type: String,
-        required: true,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    }
+  address: {
+    type: String,
+    required: true,
+  },
+  customerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Customer',
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const cForm = mongoose.model("cForm", cFormSchema);
- 
+
 module.exports = cForm;

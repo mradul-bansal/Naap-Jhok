@@ -3,35 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="/css/dashboard.css">
+    <title>NaapJhok - Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="dashboard-container">
-        <header class="dashboard-header">
-            <h1>Welcome, <%= customer.name %>!</h1>
-            <p>Your unique customer ID: <%= customer._id %></p>
-            <a href="/logout" class="logout-btn">Logout</a>
-        </header>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="/assets/NaapJhok.jpeg" alt="NaapJhok Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown">
+                    <a href="#services">Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/services/mens">Men's</a></li>
+                        <li><a href="/services/womens">Women's</a></li>
+                    </ul>
+                </li>
+                <li><a href="/become-tailor">Become Our Tailor</a></li>
+            </ul>
 
-        <section class="orders-section">
-            <h2>Your Orders</h2>
+            <div class="actions">
+                <a href="/my-orders" class="btn action1">My Orders</a>
+                <a href="/logout" class="btn action2">Logout</a>
+            </div>
+        </nav>
+    </header>
 
-            <% if (customer.orders && customer.orders.length > 0) { %>
-                <ul class="order-list">
-                    <% customer.orders.forEach(order => { %>
-                        <li class="order-item">
-                            <span>Order ID: <%= order._id %></span>
-                            <span>Status: <%= order.status %></span>
-                            <span>Items: <%= order.items.join(', ') %></span>
-                            <span>Total: $<%= order.total %></span>
-                        </li>
-                    <% }) %>
-                </ul>
-            <% } else { %>
-                <p>You have no orders yet.</p>
-            <% } %>
-        </section>
-    </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome back, <%= customerName %>!</h1>
+        <p>Stitching Happiness at Your Doorstep.</p>
+    </section>
+
+    <!-- Orders Section -->
+    <section class="orders-section">
+        <h2>Your Orders</h2>
+        <% if (orders.length > 0) { %>
+            <ul class="orders-list">
+                <% orders.forEach(order => { %>
+                    <li>
+                        <h3>Order ID: <%= order._id %></h3>
+                        <p>Status: <%= order.status %></p>
+                        <p>Details: <%= order.details %></p>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <p>You have no orders yet.</p>
+        <% } %>
+    </section>
+
+    <script>
+        const customerId = "<%= typeof customerId !== 'undefined' ? customerId : '' %>";
+        console.log("Customer ID:", customerId); // This will be empty if not defined
+    </script>
+
 </body>
 </html>

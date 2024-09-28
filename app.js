@@ -2,12 +2,15 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cForm = require("./models/cForm.js");
-const Customer = require("./models/Customer.js"); // Import your Customer model
+const Customer = require("./models/Customer.js"); 
 const Tailor = require("./models/Tailor.js");
+const Order = require("./models/Order.js"); 
+
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const session = require('express-session');
+
 
 const MONGOURL = "mongodb://127.0.0.1:27017/naap-jhok";
 
@@ -17,13 +20,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
+app.use(session({ secret: 'mySecret', resave: false, saveUninitialized: true }));
+
 
 // Middleware for sessions
 app.use(session({
-    secret: 'yourSecretKey', // Replace with your own secret key
-    resave: false,
-    saveUninitialized: true,
+  secret: 'yourSecretKey', // Replace with your own secret key
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
 }));
+
 
 // Middleware to attach customer info to res.locals
 app.use(async (req, res, next) => {
@@ -59,39 +68,48 @@ async function main() {
 
 // Home Route
 app.get('/', (req, res) => {
-    console.log("Session Data:", req.session); // Log the session data
-    const customerName = req.session.customerName || null; // Retrieve customerName from session
-    res.render('listings/index', { customerName });
+  console.log("Session Data:", req.session); // Log the session data
+  const customerName = req.session.customerName || null; // Retrieve customerName from session
+  res.render('listings/index', { customerName });
 });
+
 
 // Customer Login Route
 app.get("/login/customer", (req, res) => {
     res.render("listings/customerLogin.ejs"); // Render customer login page
 });
 
+
 app.post('/login/customer', async (req, res) => {
-    const { identifier, password } = req.body;
+  const { identifier, password } = req.body;
 
-    try {
-        const customer = await Customer.findOne({
-            $or: [{ email: identifier }, { phone: identifier }]
-        });
+  try {
+      const customer = await Customer.findOne({
+          $or: [{ email: identifier }, { phone: identifier }]
+      });
 
-        if (customer && customer.password === password) {
-            // Set session data
-            req.session.customerId = customer._id;
-            req.session.customerName = customer.name; // Make sure customer.name exists
+      if (customer && customer.password === password) {
+          // Set session data
+          req.session.customerId = customer._id;
+          req.session.customerName = customer.name;
 
-            // Redirect to the home page after login
-            res.redirect('/');
-        } else {
-            res.send('Invalid credentials');
-        }
-    } catch (err) {
-        console.error(err);
-        res.send('An error occurred');
-    }
+          // Fetch orders for the logged-in customer
+          const orders = await Order.find({ customerId: customer._id });
+
+          // Render the index page with customer info and their orders
+          return res.render('listings/index', { customerName: customer.name, orders });
+      } else {
+          res.render('auth/customerLogin', { error: 'Invalid credentials. Please try again.' });
+      }
+  } catch (err) {
+      console.error(err);
+      res.render('auth/customerLogin', { error: 'An error occurred. Please try again later.' });
+  }
 });
+
+
+
+
 
 // Customer Dashboard Route (Unique for each customer based on their MongoDB ID)
 app.get("/dashboard/:id", async (req, res) => {
@@ -110,24 +128,6 @@ app.get("/dashboard/:id", async (req, res) => {
     }
 });
 
-// Handle form submission for placing new orders
-app.post("/orders/new", async (req, res) => {
-    const { item, quantity } = req.body;
-
-    // Find the customer and add the new order
-    await Customer.findByIdAndUpdate(req.user._id, {
-        $push: {
-            orders: {
-                items: [item],
-                quantity,
-                status: "Pending",
-                total: calculateTotal(item, quantity), // Assume you have a function for calculating total
-            },
-        },
-    });
-
-    res.redirect(`/dashboard/${req.user._id}`);
-});
 
 // Tailor Login Route
 app.get("/login/tailor", (req, res) => {
@@ -206,6 +206,11 @@ app.get('/services/mens', (req, res) => {
     res.render('listings/menItems.ejs');
 });
 
+// Womens Listing 
+app.get('/services/womens', (req, res) => {
+  res.render('listings/womenitems.ejs');
+});
+
 // Logout Route
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
@@ -218,3 +223,12 @@ app.get('/logout', (req, res) => {
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+
+
+// Route to render the order placement form
+app.get("/place-order", (req, res) => {
+  if (!req.session.customerId) {
+    return res.redirect("/login/customer"); // Ensure the user is logged in
+  }
+  res.render("listings/orderform.ejs"); // Render the order placement form
+});

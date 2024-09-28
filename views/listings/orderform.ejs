@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard</title>
+  <link rel="stylesheet" href="/css/orderform.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <h1>Welcome to Your Dashboard</h1>
+
+    <h2>Your Orders</h2>
+    <ul>
+      <% orders.forEach(order => { %>
+        <li>
+          <p><strong>Order ID:</strong> <%= order._id %></p>
+          <p><strong>Name:</strong> <%= order.name %></p>
+          <p><strong>Email:</strong> <%= order.email %></p>
+          <p><strong>Phone:</strong> <%= order.phone %></p>
+          <p><strong>Pincode:</strong> <%= order.pincode %></p>
+          <p><strong>Address:</strong> <%= order.address %></p>
+          <p><strong>Date:</strong> <%= order.date %></p>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</body>
+</html>
