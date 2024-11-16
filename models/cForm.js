@@ -22,15 +22,6 @@ const cFormSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  customerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customer',
-    required: true,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
 });
 
 const cForm = mongoose.model("cForm", cFormSchema);
