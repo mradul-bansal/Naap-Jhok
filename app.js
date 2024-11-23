@@ -19,7 +19,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
-app.use(session({ secret: 'mySecret', resave: false, saveUninitialized: true }));
+// app.use(session({ secret: 'mySecret', resave: false, saveUninitialized: true }));
+
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // Use true only with HTTPS
+}));
+
+// app.set('views', path.join(__dirname, 'views'));
 
 // Middleware to attach customer info to res.locals
 app.use(async (req, res, next) => {
@@ -31,6 +40,16 @@ app.use(async (req, res, next) => {
     }
     next(); // Call the next middleware or route handler
 });
+
+function isAuthenticated(req, res, next) {
+    if (req.session.customerId) {
+        return next();
+    }
+    console.log(req.session);
+    console.log(req.session.customerId);
+    // return res.redirect('/login/customer');
+}
+
 
 // MongoDB connection
 main()
@@ -64,6 +83,35 @@ app.get("/login/customer", (req, res) => {
     res.render("listings/customerLogin.ejs"); // Render customer login page
 });
 
+// app.post('/login/customer', async (req, res) => {
+//     const { identifier, password } = req.body;
+//     console.log(identifier);
+//     console.log(password);
+
+//     try {
+//         const customer = await Customer.findOne({
+//             $or: [{ email: identifier }, { phone: identifier }]
+//         });
+
+//         if (customer && customer.password === password) {
+//             // Set session data
+//             req.session.customerId = customer._id;
+//             req.session.customerName = customer.name;
+
+//             // Fetch orders for the logged-in customer
+//             const orders = await Order.find({ customerId: customer._id });
+
+//             // Render the index page with customer info and their orders
+//             return res.render('listings/loginindex', { customerName: customer.name, orders });
+//         } else {
+//             res.render('listings/customerLogin', { error: 'Invalid credentials. Please try again.' });
+//         }
+//     } catch (err) {
+//         console.error(err);
+//         res.render('listings/customerLogin', { error: 'An error occurred. Please try again later.' });
+//     }
+// });
+
 app.post('/login/customer', async (req, res) => {
     const { identifier, password } = req.body;
 
@@ -73,23 +121,23 @@ app.post('/login/customer', async (req, res) => {
         });
 
         if (customer && customer.password === password) {
-            // Set session data
             req.session.customerId = customer._id;
-            req.session.customerName = customer.name;
+            req.session.customerEmail = customer.email;
 
-            // Fetch orders for the logged-in customer
             const orders = await Order.find({ customerId: customer._id });
 
-            // Render the index page with customer info and their orders
-            return res.render('listings/loginindex', { customerName: customer.name, orders });
+            return res.render('listings/loginindex', { customerEmail: customer.email, orders });
         } else {
-            res.render('auth/customerLogin', { error: 'Invalid credentials. Please try again.' });
+            // Invalid credentials
+            return res.render('listings/customerLogin', { error: 'Invalid credentials. Please try again.' });
         }
     } catch (err) {
         console.error(err);
-        res.render('auth/customerLogin', { error: 'An error occurred. Please try again later.' });
+        // Pass an error message to the template
+        return res.render('listings/customerLogin', { error: 'An error occurred while processing your request.' });
     }
 });
+
 
 // Customer Dashboard Route (Unique for each customer based on their MongoDB ID)
 app.get("/dashboard/:id", async (req, res) => {
@@ -108,7 +156,7 @@ app.get("/dashboard/:id", async (req, res) => {
 
 // Tailor Login Route
 app.get("/login/tailor", (req, res) => {
-    res.render("auth/tailorLogin"); // Render tailor login page
+    res.render("listings/tailorLogin"); // Render tailor login page
 });
 
 // Route to render "Become a Tailor" form
@@ -176,7 +224,9 @@ app.post("/register", async (req, res) => {
 
     await newCustomer.save();
 
-    res.send("Account created successfully!");
+    // res.send("Account created successfully!");
+    // move to login page
+    res.render('listings/customerLogin.ejs')
 });
 
 // Mens Listing 
@@ -233,11 +283,11 @@ app.post("/place-order", async (req, res) => {
 });
 
 // My Orders Route
-app.get('/my-orders', async (req, res) => {
+app.get('/my-orders', isAuthenticated, async (req, res) => {
     try {
         // Fetch orders without checking session
-        const orders = await Order.find({});
-        res.render('myOrders', { orders });
+        const orders = await Order.find({ customerId: req.session.customerId });
+        res.render('listings/myOrders', { orders });
     } catch (err) {
         res.status(500).send("Error fetching orders. Please try again later.");
     }
